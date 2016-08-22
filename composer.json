@@ -1,0 +1,32 @@
+{
+  "name": "axelero/MonoBundle",
+  "type": "symfony-bundle",
+  "description": "Provide access to Mnosolutions API",
+  "keywords": ["Symfony", "Monosolutions"],
+  "homepage": "https://",
+  "license": "LGPL-3.0",
+  "authors": [
+    {
+      "name": "Mauro D'Alatri",
+      "email": "mauro.dalatri@axelero.it"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.8",
+    "symfony/symfony": "~2.3",
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "autoload": {
+    "psr-4": { "Axelero\\MonoBundle\\": "" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
