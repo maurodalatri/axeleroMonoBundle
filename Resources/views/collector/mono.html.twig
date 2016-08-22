@@ -1,0 +1,86 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% if collector.countLogs %}
+        {% set icon %}
+            <img alt="mono" width="20" height="28" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAZCAYAAAC7OJeSAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYKDCoCRz5F/gAABURJREFUSMell81vG0UYxp+Z3fU6duOmTl1qLk2qpFWkqrRSJIOouPAPBKHkgpAaoCcOiCuXKuJCy6Gqyikop4YPYfUAPaFIpEUFVJIISEKTtE4U0iS0KbHb9Uf2Y+Z9OYDNxiSOCyNZ3vnwzG+e93ln1qK/v98AgGw2SwAYoTI4OPhce3v7l4lEomAYxg2l1C3HceZWVlZy2Ww2qB8PQOzQ1nQR6+vrFyuVyvPFYvGG1np8dXV1oa+v7wEAPnv27JsHDhwYTiQSwjRNNgyjyMwbQRDkfN//XghxW2u95DjOA8uyeuPx+IuWZd32PG95cXHxQTabLT0VzMbGxqhpmq8xM1zX9ZRSs6VS6bbjON9evXr1LcMwXu7s7ORCoSCDIAARAQAsy4IQwpdS3pdS3jUMoysSiXQD8IjoPhHN+74/4bru9QsXLvy8l2IPHz6EWF9ff9eyrIuGYZhCCACA1loppYqLi4stW1tb1vHjx2WlUhHLy8u8vLws1tbWOJ/PC9M0Yds2LMtCJBKBbdswTRMAQERMRN7W1tZwLpd7b3R0tNIIqFQqQSwtLb0Uj8c/N00zLYRAFUhK+Y98oXalFBzH4ZWVFTE2NoZ8Pg/LsmDbNuLxOGzbhpSyNj4IgnXf97/2ff9WsVj85vLly7/tBFUqlSAdx5kCsMzMqH7+3lltYLjdNE0kk0lx4sQJZDIZjsViUEqhUqmgXC6jXC7D87xwOJ+Nx+ODsVjs41gs9s758+ft3dQxT506VVlbW5uWUr5QVYGZIYQAEW1TqNpehcpkMqK7uxv37t3jyclJsbm5iSAIEI1GIaWs+qr2c9/3n+RyuWA3GAmAhRBjSilm5tqOqkrs9g0Atm0jnU7jzJkzIpPJsBACQRDA930opbYtpJR67HnedDab1Y1gEATBPDNvEBGqQOGwhUHC9dokUqKjo4Oj0SiHVQw/e563IoT4sVFGSQDI5/NrAKbrF97JMzstBgCtra0iGo2KnfqICEEQzBYKhcKeMKdPn36ilLpDRAERoRmF6hdtaWkRqVSKw8YPhYiUUjdGR0fdPWH+mpfHtdZOPUTYQ42ADMNAR0cHhzdS7Q+C4FGpVJoGoJuBged5s8y80UiJRs9CCLS3t4tQ9tSK7/s5rfXSXtdBDcZ13TwzTzUK0V5+SiaTYt++fdvGK6W067rTIyMjhaZhrl279kRrfUtrrevDtBNY/aEIAG1tbdzW1sZhQKWUy8zjzdzmNZihoSFi5jtEtNkIopFCtm2L/fv31zKKiOD7/u9a6+lmbm0ZrpTL5VkAqzstHgbb7cyRUiKdTnPVN8wMrfVMqVR6tBcIM2+HOXny5GMi+kRrvai1rqV5vY/qMyxcP3LkCEspq1nkua77QzN+WVhY2A4DgKempj5i5leZeYiIZojIrQdpFLJEIiGj0WjVvHmt9U/N+KW3t/dfMBgYGPCPHj36y8TExIdENMDMH2itJ4lI1YdopxO5paUFhw4dYq01XNe97/v+bLNvenK3joGBAb+zs3N+ZGTkfdd1XwFwTmv9XfhgrFeJiKowUErBdd0JpZTTLIyx14CbN2/ylStXnNbW1umenp6vbNueZeYIMz/DzJHqKVc1rRACm5ubYm5uLvA879Lw8PB0sy/pslnqoaEhOnbs2KN0Ov1FuVw+J4R4WwhxnYic+jRPpVIspfwjCIIlAPS/w9QoC7u6ujYOHz78aT6ff11K2QfgMyJaIyJiZhw8eBDxePxusVicf5qJ/wtMrfT09BRTqdT4zMzMG1rrfiK6xMy/2bbtJpPJX5/2r8qfRap3jEN1ViwAAAAASUVORK5CYII=">
+            <span class="sf-toolbar-status">{{ collector.countLogs }}</span>
+        {% endset %}
+        {% set text %}
+            <span title="{{ collector.countLogs }} requests"> <strong>Mono</strong> {{ collector.countLogs }}</span>
+        {% endset %}
+        {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with {'link': profiler_url} %}
+    {% endif %}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">
+            <img alt="mono" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAZCAYAAAC7OJeSAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYKDCoCRz5F/gAABURJREFUSMell81vG0UYxp+Z3fU6duOmTl1qLk2qpFWkqrRSJIOouPAPBKHkgpAaoCcOiCuXKuJCy6Gqyikop4YPYfUAPaFIpEUFVJIISEKTtE4U0iS0KbHb9Uf2Y+Z9OYDNxiSOCyNZ3vnwzG+e93ln1qK/v98AgGw2SwAYoTI4OPhce3v7l4lEomAYxg2l1C3HceZWVlZy2Ww2qB8PQOzQ1nQR6+vrFyuVyvPFYvGG1np8dXV1oa+v7wEAPnv27JsHDhwYTiQSwjRNNgyjyMwbQRDkfN//XghxW2u95DjOA8uyeuPx+IuWZd32PG95cXHxQTabLT0VzMbGxqhpmq8xM1zX9ZRSs6VS6bbjON9evXr1LcMwXu7s7ORCoSCDIAARAQAsy4IQwpdS3pdS3jUMoysSiXQD8IjoPhHN+74/4bru9QsXLvy8l2IPHz6EWF9ff9eyrIuGYZhCCACA1loppYqLi4stW1tb1vHjx2WlUhHLy8u8vLws1tbWOJ/PC9M0Yds2LMtCJBKBbdswTRMAQERMRN7W1tZwLpd7b3R0tNIIqFQqQSwtLb0Uj8c/N00zLYRAFUhK+Y98oXalFBzH4ZWVFTE2NoZ8Pg/LsmDbNuLxOGzbhpSyNj4IgnXf97/2ff9WsVj85vLly7/tBFUqlSAdx5kCsMzMqH7+3lltYLjdNE0kk0lx4sQJZDIZjsViUEqhUqmgXC6jXC7D87xwOJ+Nx+ODsVjs41gs9s758+ft3dQxT506VVlbW5uWUr5QVYGZIYQAEW1TqNpehcpkMqK7uxv37t3jyclJsbm5iSAIEI1GIaWs+qr2c9/3n+RyuWA3GAmAhRBjSilm5tqOqkrs9g0Atm0jnU7jzJkzIpPJsBACQRDA930opbYtpJR67HnedDab1Y1gEATBPDNvEBGqQOGwhUHC9dokUqKjo4Oj0SiHVQw/e563IoT4sVFGSQDI5/NrAKbrF97JMzstBgCtra0iGo2KnfqICEEQzBYKhcKeMKdPn36ilLpDRAERoRmF6hdtaWkRqVSKw8YPhYiUUjdGR0fdPWH+mpfHtdZOPUTYQ42ADMNAR0cHhzdS7Q+C4FGpVJoGoJuBged5s8y80UiJRs9CCLS3t4tQ9tSK7/s5rfXSXtdBDcZ13TwzTzUK0V5+SiaTYt++fdvGK6W067rTIyMjhaZhrl279kRrfUtrrevDtBNY/aEIAG1tbdzW1sZhQKWUy8zjzdzmNZihoSFi5jtEtNkIopFCtm2L/fv31zKKiOD7/u9a6+lmbm0ZrpTL5VkAqzstHgbb7cyRUiKdTnPVN8wMrfVMqVR6tBcIM2+HOXny5GMi+kRrvai1rqV5vY/qMyxcP3LkCEspq1nkua77QzN+WVhY2A4DgKempj5i5leZeYiIZojIrQdpFLJEIiGj0WjVvHmt9U/N+KW3t/dfMBgYGPCPHj36y8TExIdENMDMH2itJ4lI1YdopxO5paUFhw4dYq01XNe97/v+bLNvenK3joGBAb+zs3N+ZGTkfdd1XwFwTmv9XfhgrFeJiKowUErBdd0JpZTTLIyx14CbN2/ylStXnNbW1umenp6vbNueZeYIMz/DzJHqKVc1rRACm5ubYm5uLvA879Lw8PB0sy/pslnqoaEhOnbs2KN0Ov1FuVw+J4R4WwhxnYic+jRPpVIspfwjCIIlAPS/w9QoC7u6ujYOHz78aT6ff11K2QfgMyJaIyJiZhw8eBDxePxusVicf5qJ/wtMrfT09BRTqdT4zMzMG1rrfiK6xMy/2bbtJpPJX5/2r8qfRap3jEN1ViwAAAAASUVORK5CYII=">
+        </span>
+        <strong>Mono</strong>
+        <span class="count">
+            <span>{{ collector.countLogs }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Requests</h2>
+
+    {% if not collector.countLogs %}
+        <p>
+            <em>No requests sent.</em>
+        </p>
+    {% else %}
+        <ul class="alt" style="list-style: none;">
+            {% for i, log in collector.logs %}
+                <li class="{{ i is odd ? 'odd' : 'even' }} ">
+                    <table>
+                        <tbody>
+                        {% for variable,value in log if variable != 'rows' %}
+                            <tr>
+                                <th>{{ variable }}</th>
+                                <td>
+                                    {% if variable == 'url' %}
+                                        <a href="{{ value|replace({(collector.getUsername ~ ':[...]@'): ''}) }}">{{ value }}</a>
+                                    {% else %}
+                                        {{ value }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if log.rows is defined and log.rows %}
+                        <h3>Results</h3>
+                        <table>
+                            <thead>
+                            {% for field,value in log.rows[0] %}
+                                <th>
+                                    {{ field }}
+                                </th>
+                            {% endfor %}
+                            </thead>
+                            <tbody>
+                            {% for result in log.rows %}
+                                <tr>
+                                    {% for value in result %}
+                                        <td>
+                                            {% if value is iterable %}
+                                                (array: {{ value|length }})
+                                            {% else %}
+                                                {{ value }}
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
