@@ -1,0 +1,4 @@
+services:
+#    axelero_mono.example:
+#        class: Axelero\MonoBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
