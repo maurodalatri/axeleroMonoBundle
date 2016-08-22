@@ -1,5 +1,5 @@
 {
-  "name": "axelero/axelero-mono-bundle",
+  "name": "axelero/mono-bundle",
   "type": "symfony-bundle",
   "description": "Provide access to Mnosolutions API",
   "keywords": ["Symfony", "Monosolutions"],
