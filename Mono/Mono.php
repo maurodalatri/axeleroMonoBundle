@@ -20,7 +20,7 @@ class Mono {
     /**
      * @var Logger
      */
-    private $logger;
+    protected $logger;
 
 
     /**
@@ -33,7 +33,7 @@ class Mono {
      * @var string $api_reseller_token
      *   The Mono API Reseller Token to authenticate with.
      */
-    private $api_reseller_token;
+    protected $api_reseller_token;
 
 
     /**
@@ -50,10 +50,19 @@ class Mono {
         $this->client               = $client;
     }
 
-
+    /**
+     * Get ResellerInfo
+     *
+     * @see https://www.monoextranet.com/halapi/class-api_reseller.php
+     *
+     * @return mixed
+     * @throws \Axelero\MonoBundle\Mono\MonoApiException
+     */
     public function getResellerInfo() {
+        $info = $this->request("reseller", "getInfo");
+        if(!$info['success']) Throw new MonoApiException($info['data']->status->text);
 
-        return  $this->request("reseller", "getInfo");
+        return $info['data'];
     }
 
 
@@ -67,9 +76,7 @@ class Mono {
      * @param array $parameters
      *   Associative array of parameters to send in POST
      *
-     * @return object
-     *
-     * @throws MonoAPIException
+     * @return array
      */
     protected function request($path, $command, $parameters = NULL)
     {
@@ -91,12 +98,9 @@ class Mono {
             }
         }
         $this->logger->logRequest($toProfiler);
+        $isError = $this->isErrorResponse($response->status);
 
-        if($this->isErrorResponse($response->status)){
-            Throw new MonoApiException();
-        }
-
-        return $response;
+        return ['success' => !$isError,'data'=> $response];
 
     }
 

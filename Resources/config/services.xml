@@ -4,7 +4,7 @@
 
         <service id="axelero_mono.guzzle_client" class="GuzzleHttp\Client"></service>
 
-        <service id="axelero_mono.mono_class" class="Axelero\MonoBundle\Mono\Mono">
+        <service id="axelero_mono.mono_class" class="%axelero_mono.mono_class%">
             <argument>%axelero_mono.api_reseller_token%</argument>
             <argument type="service" id="axelero_mono.logger"/>
             <argument type="service" id="axelero_mono.guzzle_client"/>

@@ -42,7 +42,7 @@ class MonoTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, [],
             json_encode([
-                'status'=> ['code' => 404],
+                'status'=> ['code' => 404,'text'=>'Access denied','timeStamp'=>''],
                 'data'=> []
             ])
         );
