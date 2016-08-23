@@ -21,6 +21,7 @@ class ResellerStub
         );
     }
 
+    // TODO: Impostare il return con il JSON corrisponde
     public function getDomains(){
         return  $response = new Response(200, [],
             json_encode([

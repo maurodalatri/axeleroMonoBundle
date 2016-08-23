@@ -81,9 +81,16 @@ class Mono
         $postParams['userToken'] = $this->api_reseller_token;
         $guzzleResponse = $this->client->request('POST', $this->endpoint.$path, ['form_params' => $postParams]);
         $response = json_decode($guzzleResponse->getBody());
+        $isError = $this->isErrorResponse($response->status);
 
-        // Logga la response per il DataCollector da mostrare sul Profiler di Symfony
+        $this->logResponse($path, $postParams, $guzzleResponse);
+
+        return ['success' => !$isError, 'data' => $response];
+    }
+
+    private function logResponse($path, $postParams, $guzzleResponse){
         $responseToLog = json_decode($guzzleResponse->getBody(), true);
+
         $toProfiler['Url'] = $this->endpoint.$path;
         $toProfiler['postParams'] = http_build_query($postParams);
         $toProfiler['status'] = $responseToLog['status'];
@@ -94,9 +101,6 @@ class Mono
             }
         }
         $this->logger->logRequest(array_merge($postParams,$toProfiler));
-        $isError = $this->isErrorResponse($response->status);
-
-        return ['success' => !$isError, 'data' => $response];
     }
 
     protected function isErrorResponse($status)
