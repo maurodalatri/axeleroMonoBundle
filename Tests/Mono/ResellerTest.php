@@ -2,14 +2,14 @@
 
 namespace Axelero\MonoBundle\Tests;
 
-use Axelero\MonoBundle\Mono\Mono;
+use Axelero\MonoBundle\Mono\Reseller;
 use Axelero\MonoBundle\Log\Logger;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 
-class MonoTest extends \PHPUnit_Framework_TestCase
+class ResellerTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetResellerInfo()
     {
@@ -30,8 +30,8 @@ class MonoTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
 
-        $mono = new Mono('stringafakeToken', new Logger(), $client);
-        $response = $mono->getResellerInfo();
+        $mono = new Reseller('stringafakeToken', new Logger(), $client);
+        $response = $mono->getInfo();
 
         $this->assertEquals('Reseller', $response->data->reseller->name);
     }
@@ -52,7 +52,7 @@ class MonoTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
 
-        $mono = new Mono('stringafakeToken', new Logger(), $client);
-        $mono->getResellerInfo();
+        $mono = new Reseller('stringafakeToken', new Logger(), $client);
+        $mono->getInfo();
     }
 }

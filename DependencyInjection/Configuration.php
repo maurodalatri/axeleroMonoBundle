@@ -25,9 +25,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('api_reseller_token')
                     ->isRequired()
                 ->end()
-                ->scalarNode('mono_class')
+                ->scalarNode('reseller_class')
                     ->cannotBeEmpty()
-                    ->defaultValue("Axelero\MonoBundle\Mono\Mono")
+                    ->defaultValue("Axelero\MonoBundle\Mono\Reseller")
                 ->end()
             ->end()
         ;

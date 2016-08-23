@@ -23,7 +23,7 @@ class AxeleroMonoExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('axelero_mono.api_reseller_token', $config['api_reseller_token']);
-        $container->setParameter('axelero_mono.mono_class', $config['mono_class']);
+        $container->setParameter('axelero_mono.reseller_class', $config['reseller_class']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

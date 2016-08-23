@@ -46,17 +46,15 @@ class Mono
     }
 
     /**
-     * Get ResellerInfo.
-     *
-     * @see https://www.monoextranet.com/halapi/class-api_reseller.php
-     *
+     * @param $name
+     * @param $arguments
      * @return mixed
-     *
-     * @throws \Axelero\MonoBundle\Mono\MonoApiException
+     * @throws MonoApiException
      */
-    public function getResellerInfo()
+    public function __call($name, $arguments)
     {
-        $info = $this->request('reseller', 'getInfo');
+        // Note: value of $name is case sensitive.
+        $info = $this->request('reseller',$name, $arguments);
         if (!$info['success']) {
             throw new MonoApiException($info['data']->status->text);
         }
@@ -78,7 +76,7 @@ class Mono
      */
     protected function request($path, $command, $parameters = null)
     {
-        $postParams = $parameters;
+        $postParams = current($parameters);
         $postParams['command'] = $command;
         $postParams['userToken'] = $this->api_reseller_token;
         $guzzleResponse = $this->client->request('POST', $this->endpoint.$path, ['form_params' => $postParams]);
@@ -95,7 +93,7 @@ class Mono
                 $toProfiler['data'][] = $data;
             }
         }
-        $this->logger->logRequest($toProfiler);
+        $this->logger->logRequest(array_merge($postParams,$toProfiler));
         $isError = $this->isErrorResponse($response->status);
 
         return ['success' => !$isError, 'data' => $response];
