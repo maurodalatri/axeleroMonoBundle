@@ -42,11 +42,7 @@
                             <tr>
                                 <th>{{ variable }}</th>
                                 <td>
-                                    {% if variable == 'url' %}
-                                        <a href="{{ value|replace({(collector.getUsername ~ ':[...]@'): ''}) }}">{{ value }}</a>
-                                    {% else %}
-                                        {{ value }}
-                                    {% endif %}
+                                    {{ dump(value) }}
                                 </td>
                             </tr>
                         {% endfor %}

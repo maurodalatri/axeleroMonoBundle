@@ -27,11 +27,4 @@ class Logger
         $this->log(serialize($request), $priority);
     }
 
-    /**
-     * @return array
-     */
-    public function getLogs()
-    {
-        return $this->logs;
-    }
 }

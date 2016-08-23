@@ -2,15 +2,18 @@
 
 namespace Axelero\MonoBundle\Mono;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Axelero\MonoBundle\Log\Logger;
+use Axelero\MonoBundle\Mono\MonoApiException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+
+
 
 class Mono {
 
     /**
      * @var Client $client
-     *   The GuzzleHttp Client.
+     *    The GuzzleHttp Client.
      */
     protected $client;
 
@@ -37,26 +40,20 @@ class Mono {
      * Mono constructor.
      *
      * @param string $api_reseller_token
-     *   The Mono API  reseller token.
-     *
-     * @param int $timeout
-     *   Maximum request time in seconds.
+     * @param Logger $logger
+     * @param Client $client
      */
-    public function __construct($api_reseller_token, Logger $logger, $timeout = 10) {
-
-        $this->logger = $logger;
-
-        $this->api_reseller_token = $api_reseller_token;
-
-        $this->client = new Client([
-            'timeout' => $timeout,
-        ]);
+    public function __construct($api_reseller_token, Logger $logger, Client $client)
+    {
+        $this->api_reseller_token   = $api_reseller_token;
+        $this->logger               = $logger;
+        $this->client               = $client;
     }
 
 
     public function getResellerInfo() {
 
-        return  $this->request("reseller/account", "getInfo");
+        return  $this->request("reseller", "getInfo");
     }
 
 
@@ -74,39 +71,36 @@ class Mono {
      *
      * @throws MonoAPIException
      */
-    protected function request($path, $command, $parameters = NULL) {
-        try {
+    protected function request($path, $command, $parameters = NULL)
+    {
+        $postParams = $parameters;
+        $postParams["command"] = $command;
+        $postParams["userToken"] = $this->api_reseller_token;
+        $guzzleResponse = $this->client->request("POST", $this->endpoint . $path, ['form_params' => $postParams]);
+        $response = json_decode($guzzleResponse->getBody());
 
-            $postParams = $parameters;
-            $postParams["command"] = $command;
-            $postParams["userToken"] = $this->api_reseller_token;
-            $response = $this->client->request("POST", $this->endpoint.$path, $postParams);
-            $data = json_decode($response->getBody());
+        // Logga la response per il DataCollector da mostrare sul Profiler di Symfony
+        $responseToLog = json_decode($guzzleResponse->getBody(), true);
+        $toProfiler['Url'] = $this->endpoint . $path;
+        $toProfiler['postParams'] = http_build_query($postParams);
+        $toProfiler['status'] = $responseToLog['status'];
 
-            $responseToLog = json_decode($response->getBody(), true);
-
-            $toProfiler = $responseToLog['status'];
-            $toProfiler['Url'] = $this->endpoint.$path;
-            $toProfiler['postParams'] = http_build_query($postParams);
-
-            $this->logger->logRequest($toProfiler);
-
-            return $data;
-
-        }
-        catch (RequestException $e) {
-            $response = $e->getResponse();
-            if (!empty($response)) {
-                $message = $e->getResponse()->getBody();
+        if (!empty($responseToLog['data'])) {
+            foreach ($responseToLog['data'] as $data) {
+                $toProfiler['data'][] = $data;
             }
-            else {
-                $message = $e->getMessage();
-            }
-
-            throw new MonoAPIException($message, $e->getCode(), $e);
         }
+        $this->logger->logRequest($toProfiler);
+
+        if($this->isErrorResponse($response->status)){
+            Throw new MonoApiException();
+        }
+
+        return $response;
+
     }
 
-
-
+    protected function isErrorResponse($status){
+        return $status->code != 200;
+    }
 }
