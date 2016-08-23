@@ -3,17 +3,14 @@
 namespace Axelero\MonoBundle\Mono;
 
 use Axelero\MonoBundle\Log\Logger;
-use Axelero\MonoBundle\Mono\MonoApiException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
-
-
-class Mono {
-
+class Mono
+{
     /**
-     * @var Client $client
-     *    The GuzzleHttp Client.
+     * @var Client
+     *             The GuzzleHttp Client
      */
     protected $client;
 
@@ -22,19 +19,17 @@ class Mono {
      */
     protected $logger;
 
-
     /**
-     * @var string $endpoint
-     *   The REST API endpoint.
+     * @var string
+     *             The REST API endpoint
      */
     protected $endpoint = 'https://hal.mono.net/api/v1/';
 
     /**
-     * @var string $api_reseller_token
-     *   The Mono API Reseller Token to authenticate with.
+     * @var string
+     *             The Mono API Reseller Token to authenticate with
      */
     protected $api_reseller_token;
-
 
     /**
      * Mono constructor.
@@ -45,50 +40,53 @@ class Mono {
      */
     public function __construct($api_reseller_token, Logger $logger, Client $client)
     {
-        $this->api_reseller_token   = $api_reseller_token;
-        $this->logger               = $logger;
-        $this->client               = $client;
+        $this->api_reseller_token = $api_reseller_token;
+        $this->logger = $logger;
+        $this->client = $client;
     }
 
     /**
-     * Get ResellerInfo
+     * Get ResellerInfo.
      *
      * @see https://www.monoextranet.com/halapi/class-api_reseller.php
      *
      * @return mixed
+     *
      * @throws \Axelero\MonoBundle\Mono\MonoApiException
      */
-    public function getResellerInfo() {
-        $info = $this->request("reseller", "getInfo");
-        if(!$info['success']) Throw new MonoApiException($info['data']->status->text);
+    public function getResellerInfo()
+    {
+        $info = $this->request('reseller', 'getInfo');
+        if (!$info['success']) {
+            throw new MonoApiException($info['data']->status->text);
+        }
 
         return $info['data'];
     }
-
 
     /**
      * Makes a request to the MailChimp API.
      *
      * @param string $path
-     *   The API path to request.
+     *                           The API path to request
      * @param string $command
-     *   The string of command Ex.: getInfo
-     * @param array $parameters
-     *   Associative array of parameters to send in POST
+     *                           The string of command Ex.: getInfo
+     * @param array  $parameters
+     *                           Associative array of parameters to send in POST
      *
      * @return array
      */
-    protected function request($path, $command, $parameters = NULL)
+    protected function request($path, $command, $parameters = null)
     {
         $postParams = $parameters;
-        $postParams["command"] = $command;
-        $postParams["userToken"] = $this->api_reseller_token;
-        $guzzleResponse = $this->client->request("POST", $this->endpoint . $path, ['form_params' => $postParams]);
+        $postParams['command'] = $command;
+        $postParams['userToken'] = $this->api_reseller_token;
+        $guzzleResponse = $this->client->request('POST', $this->endpoint.$path, ['form_params' => $postParams]);
         $response = json_decode($guzzleResponse->getBody());
 
         // Logga la response per il DataCollector da mostrare sul Profiler di Symfony
         $responseToLog = json_decode($guzzleResponse->getBody(), true);
-        $toProfiler['Url'] = $this->endpoint . $path;
+        $toProfiler['Url'] = $this->endpoint.$path;
         $toProfiler['postParams'] = http_build_query($postParams);
         $toProfiler['status'] = $responseToLog['status'];
 
@@ -100,11 +98,11 @@ class Mono {
         $this->logger->logRequest($toProfiler);
         $isError = $this->isErrorResponse($response->status);
 
-        return ['success' => !$isError,'data'=> $response];
-
+        return ['success' => !$isError, 'data' => $response];
     }
 
-    protected function isErrorResponse($status){
+    protected function isErrorResponse($status)
+    {
         return $status->code != 200;
     }
 }

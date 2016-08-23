@@ -2,8 +2,8 @@
 
 namespace Axelero\MonoBundle\Mono;
 
-use \Exception;
+use Exception;
 
-class MonoApiException extends Exception {
-
+class MonoApiException extends Exception
+{
 }

@@ -67,5 +67,4 @@ class MonoDataCollector extends DataCollector
     {
         return $this->data['logCount'];
     }
-
 }

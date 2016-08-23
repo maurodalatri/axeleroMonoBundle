@@ -1,4 +1,5 @@
 <?php
+
 namespace Axelero\MonoBundle\Tests;
 
 use Axelero\MonoBundle\Mono\Mono;
@@ -14,14 +15,14 @@ class MonoTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, [],
             json_encode([
-                'status'=> ['code' => 200],
-                'data'=> [
+                'status' => ['code' => 200],
+                'data' => [
                     'reseller' => [
-                        'id'=>1,
-                        'name'=>'Reseller',
-                        'toolDomain' => 'http://monosolutions.it'
-                    ]
-                ]
+                        'id' => 1,
+                        'name' => 'Reseller',
+                        'toolDomain' => 'http://monosolutions.it',
+                    ],
+                ],
             ])
         );
 
@@ -29,7 +30,7 @@ class MonoTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
 
-        $mono = new Mono("stringafakeToken", new Logger(), $client);
+        $mono = new Mono('stringafakeToken', new Logger(), $client);
         $response = $mono->getResellerInfo();
 
         $this->assertEquals('Reseller', $response->data->reseller->name);
@@ -42,8 +43,8 @@ class MonoTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(200, [],
             json_encode([
-                'status'=> ['code' => 404,'text'=>'Access denied','timeStamp'=>''],
-                'data'=> []
+                'status' => ['code' => 404, 'text' => 'Access denied', 'timeStamp' => ''],
+                'data' => [],
             ])
         );
 
@@ -51,8 +52,7 @@ class MonoTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
 
-        $mono = new Mono("stringafakeToken", new Logger(), $client);
+        $mono = new Mono('stringafakeToken', new Logger(), $client);
         $mono->getResellerInfo();
     }
-
 }
