@@ -98,12 +98,8 @@ abstract class Mono
         $postParams['command'] = $command;
         $postParams['userToken'] = $this->api_reseller_token;
         $guzzleResponse = $this->client->request('POST', $this->endpoint.$path, ['form_params' => $postParams]);
-
-
         $this->response = json_decode($guzzleResponse->getBody());
-
         $isError = $this->isErrorResponse($this->response->status);
-
         $this->logResponse($path, $postParams, $guzzleResponse);
 
         return ['success' => !$isError, 'data' => (object)$this->response];
