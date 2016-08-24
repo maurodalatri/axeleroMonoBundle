@@ -8,5 +8,8 @@ use GuzzleHttp\Psr7\Response;
 
 class Reseller extends Mono
 {
-
+    /**
+     * @inheritdoc
+     */
+    protected $apiPath = 'reseller';
 }

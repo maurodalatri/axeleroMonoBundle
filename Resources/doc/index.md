@@ -45,7 +45,7 @@ You should define ``mono_reseller_token`` parameters in your ``app/config/parame
 # app/config/config_test.yml
 
 axelero_mono:
-    mono_class: Axelero\MonoBundle\Mono\MonoStub
+    mono_class:  Axelero\MonoBundle\Tests\Mono\Stub\ResellerStub
 ```
 
 
