@@ -87,4 +87,18 @@ class ResellerStub
         );
     }
 
+    public function siteLogin(){
+        return  $response = new Response(200, [],
+            json_encode([
+                'status' => ['code' => 200, 'text' => '', 'timeStamp' => ''],
+                'data' => [
+                    'ticket' => '123kjh1234kjh1234kj12734k12j34h',
+                    'loginUrl' => 'http://editor.axeleromedia.it/v5/login.php',
+                    'fullLoginUrl' => 'http://editor.axeleromedia.it/v5/login.php?et=%2At%40%',
+
+                ],
+            ])
+        );
+    }
+
 }
