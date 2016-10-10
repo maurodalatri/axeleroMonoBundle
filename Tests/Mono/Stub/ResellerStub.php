@@ -2,9 +2,10 @@
 
 namespace Axelero\MonoBundle\Tests\Mono\Stub;
 
+use Axelero\MonoBundle\Mono\MonoInterface;
 use GuzzleHttp\Psr7\Response;
 
-class ResellerStub
+class ResellerStub implements MonoInterface
 {
     public function getInfo(){
         return  $response = new Response(200, [],
@@ -95,6 +96,26 @@ class ResellerStub
                     'ticket' => '123kjh1234kjh1234kj12734k12j34h',
                     'loginUrl' => 'http://editor.axeleromedia.it/v5/login.php',
                     'fullLoginUrl' => 'http://editor.axeleromedia.it/v5/login.php?et=%2At%40%',
+
+                ],
+            ])
+        );
+    }
+
+    public function globalSearch(){
+        return  $response = new Response(200, [],
+            json_encode([
+                'status' => ['code' => 200, 'text' => '', 'timeStamp' => ''],
+                'data' => [
+                    [
+                        'globalData' => [
+                            'company_name' => "Azienda",
+                            'street' => "indirizzo",
+                            'zip' => "00100",
+                            'city' => 'Citta',
+                            'logo' => ''
+                        ]
+                    ]
 
                 ],
             ])

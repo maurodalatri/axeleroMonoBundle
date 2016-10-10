@@ -10,6 +10,13 @@
             <argument type="service" id="axelero_mono.guzzle_client"/>
         </service>
 
+
+        <service id="axelero_mono.site_class" class="%axelero_mono.site_class%">
+            <argument>%axelero_mono.api_reseller_token%</argument>
+            <argument type="service" id="axelero_mono.logger"/>
+            <argument type="service" id="axelero_mono.guzzle_client"/>
+        </service>
+
         <service id="axelero_mono.data_collector" class="Axelero\MonoBundle\DataCollector\MonoDataCollector">
             <argument type="service" id="axelero_mono.logger"/>
             <tag name="data_collector" template="AxeleroMonoBundle:collector:mono" id="mono" />

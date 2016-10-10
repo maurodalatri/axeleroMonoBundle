@@ -29,6 +29,10 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue("Axelero\MonoBundle\Mono\Reseller")
                 ->end()
+                ->scalarNode('site_class')
+                    ->cannotBeEmpty()
+                    ->defaultValue("Axelero\MonoBundle\Mono\Site")
+                ->end()
             ->end()
         ;
 

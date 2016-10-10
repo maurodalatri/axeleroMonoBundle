@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use phpDocumentor\Reflection\Types\Object_;
 
-abstract class Mono
+abstract class Mono implements MonoInterface
 {
     /**
      * @var Client
