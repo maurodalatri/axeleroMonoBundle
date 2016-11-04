@@ -33,6 +33,14 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue("Axelero\MonoBundle\Mono\Site")
                 ->end()
+                ->scalarNode('account_class')
+                    ->cannotBeEmpty()
+                    ->defaultValue("Axelero\MonoBundle\Mono\Account")
+                ->end()
+                ->scalarNode('domain_class')
+                    ->cannotBeEmpty()
+                    ->defaultValue("Axelero\MonoBundle\Mono\Domain")
+               ->end()
             ->end()
         ;
 

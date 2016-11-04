@@ -3,6 +3,9 @@
     <services>
 
         <service id="axelero_mono.guzzle_client" class="GuzzleHttp\Client"></service>
+        <service id="axelero_mono.factory" class="Axelero\MonoBundle\Mono\MonoFactory">
+            <argument type="service" id="service_container"/>
+        </service>
 
         <service id="axelero_mono.reseller_class" class="%axelero_mono.reseller_class%">
             <argument>%axelero_mono.api_reseller_token%</argument>
@@ -12,6 +15,19 @@
 
 
         <service id="axelero_mono.site_class" class="%axelero_mono.site_class%">
+            <argument>%axelero_mono.api_reseller_token%</argument>
+            <argument type="service" id="axelero_mono.logger"/>
+            <argument type="service" id="axelero_mono.guzzle_client"/>
+        </service>
+
+
+        <service id="axelero_mono.account_class" class="%axelero_mono.account_class%">
+            <argument>%axelero_mono.api_reseller_token%</argument>
+            <argument type="service" id="axelero_mono.logger"/>
+            <argument type="service" id="axelero_mono.guzzle_client"/>
+        </service>
+
+        <service id="axelero_mono.domain_class" class="%axelero_mono.domain_class%">
             <argument>%axelero_mono.api_reseller_token%</argument>
             <argument type="service" id="axelero_mono.logger"/>
             <argument type="service" id="axelero_mono.guzzle_client"/>
