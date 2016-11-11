@@ -1,7 +1,7 @@
 <?php
 
 namespace Axelero\MonoBundle\Mono;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 /**
@@ -14,7 +14,7 @@ class MonoFactory {
      */
     protected $container;
 
-    public function  __construct(Container $container){
+    public function  __construct(ContainerInterface $container){
         $this->container = $container;
     }
 
