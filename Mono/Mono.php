@@ -9,6 +9,9 @@ use phpDocumentor\Reflection\Types\Object_;
 
 abstract class Mono implements MonoInterface
 {
+
+    const ENDOPOINT = 'https://hal.mono.net/api/v1/';
+
     /**
      * @var Client
      * The GuzzleHttp Client
@@ -24,7 +27,7 @@ abstract class Mono implements MonoInterface
      * @var string
      * The REST API base endpoint
      */
-    protected $endpoint = 'https://hal.mono.net/api/v1/';
+    protected $endpoint = self::ENDOPOINT;
 
 
     /**
@@ -80,6 +83,15 @@ abstract class Mono implements MonoInterface
         return $info['data'];
     }
 
+
+    /**
+     * @return string
+     */
+    public function getApiResellerToken(){
+        return $this->api_reseller_token;
+    }
+
+
     /**
      * Makes a request to the MailChimp API.
      *
@@ -115,6 +127,11 @@ abstract class Mono implements MonoInterface
         return $status->code != 200;
     }
 
+    /**
+     * @param $path
+     * @param $postParams
+     * @param $guzzleResponse
+     */
     private function logResponse($path, $postParams, $guzzleResponse){
         $responseToLog = json_decode($guzzleResponse->getBody(), true);
 
